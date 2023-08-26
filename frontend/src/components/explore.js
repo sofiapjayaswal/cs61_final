@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Map from './map';
 import axios from 'axios';
-import SimpleMap from './simpleMap';
 
 function Explore(props) {
   const backendUrl = 'http://localhost:9090';
