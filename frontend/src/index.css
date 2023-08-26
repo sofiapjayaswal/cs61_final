@@ -48,6 +48,39 @@ nav ul{
   font-size: 1.2em;
 }
 
+#explore {
+  padding: 2%;
+}
+
+.mapFilters {
+  display: flex;
+  list-style-type: none;
+  height: 10vh;
+  width: 100vw;
+  flex-direction: row;
+  align-items: center;
+  padding-bottom: 2%;
+}
+
+.filterButton {
+  width: 15vw;
+  height: 8vh;
+  background-color: cadetblue;
+  border:none;
+  color:rgb(255, 252, 247);
+  border-radius: 10px;
+  font-size: 1.2em;
+}
+
+.filterButton:hover {
+  background-color: rgba(66, 111, 112, 0.897);
+  cursor: pointer;
+}
+
+#mapContainer {
+  display: flex;
+  justify-content: center;
+}
 :root {
   text-size-adjust: 100%;
 }
