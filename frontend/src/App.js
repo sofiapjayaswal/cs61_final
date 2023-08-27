@@ -1,7 +1,4 @@
-import logo from './logo.svg';
 import './App.css';
-import {useState, useEffect} from 'react';
-import axios from 'axios';
 import {
   BrowserRouter, Routes, Route, NavLink,
 } from 'react-router-dom';
@@ -15,6 +12,7 @@ library.add(faHouseLaptop);
 
 function App() {
   return (
+    <div id="root">
     <BrowserRouter>
       <div id="nav-bar">
         <Nav />
@@ -24,6 +22,7 @@ function App() {
         </Routes>
       </div>
     </BrowserRouter>
+    </div>
   );
 }
 

@@ -1,42 +1,70 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Map from './map';
 import axios from 'axios';
 
 function Explore(props) {
   const backendUrl = 'http://localhost:9090';
-  const [locationData, setLocationData] = useState([]);
+  const [data, setData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [filter, setFilter] = useState("");
+  const [dataFilter, setDataFilter] = useState(null);
+  const [locationFilter, setLocationFilter] = useState(null);
+  const [areFiltersSet, setAreFiltersSet] = useState(false);
 
-  useEffect(() => {
-    axios.get(`${backendUrl}/data`)
+  // useEffect(() => {
+  //   axios.get(`${backendUrl}/data`, {para})
+  //     .then(response => {
+  //       setLocationData(response.data);
+  //       setIsLoaded(true); // Set isLoaded to true after locationData is set
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching data:', error);
+  //     });
+  // }, []);
+
+  const checkFormReady = () => {
+    if (dataFilter && locationFilter) {
+      setAreFiltersSet(true);
+    } else {
+      setAreFiltersSet(false);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (areFiltersSet) {
+      axios.get(`${backendUrl}/data`, {params: { location: locationFilter, dataType: dataFilter }})
       .then(response => {
-        setLocationData(response.data);
+        setData(response.data);
         setIsLoaded(true); // Set isLoaded to true after locationData is set
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  }, []);
-
-    return (
-        <div id="explore">
-          <li className="mapFilters">
-              <h2>Filter By:</h2>
-              <ul><button className="filterButton" onClick={()=>setFilter("financial")}>Northern California</button></ul>
-              <ul><button className="filterButton" onClick={()=>setFilter("ocean")}>Central California</button></ul>
-              <ul><button className="filterButton" onClick={()=>setFilter("population")}>Southern California</button></ul>
-          </li>
-          <li className="mapFilters">
-            <h2>Filter By:</h2>
-            <ul><button className="filterButton" onClick={()=>setFilter("financial")}>Financial Information</button></ul>
-            <ul><button className="filterButton" onClick={()=>setFilter("ocean")}>Ocean Proximity</button></ul>
-            <ul><button className="filterButton" onClick={()=>setFilter("population")}>Population Information</button></ul>
-          </li>
-          <div id="mapContainer">
-            {isLoaded ? <Map locationData={locationData} /> : <p>Loading...</p>}
-          </div>
-        </div>
+    }
+    // handle database call here
+  };
+  return (
+    <div id="explore">
+      <li className="mapFilters">
+          <h2>Filter By:</h2>
+          <ul><button className="filterButton" onClick={()=>{setLocationFilter("North"); checkFormReady()}}>Northern California</button></ul>
+          <ul><button className="filterButton" onClick={()=>{setLocationFilter("Central"); checkFormReady()}}>Central California</button></ul>
+          <ul><button className="filterButton" onClick={()=>{setLocationFilter("South"); checkFormReady()}}>Southern California</button></ul>
+      </li>
+      <li className="mapFilters">
+        <h2>View Data For Blocks Related To:</h2>
+        <ul><button className="filterButton" onClick={()=>{setDataFilter("financial_info"); checkFormReady()}}>Financial Information</button></ul>
+        <ul><button className="filterButton" onClick={()=>{setDataFilter("ocean_proximity"); checkFormReady()}}>Ocean Proximity</button></ul>
+        <ul><button className="filterButton" onClick={()=>{setDataFilter("house_size"); checkFormReady()}}>House Size</button></ul>
+        <ul><button className="filterButton" onClick={()=>{setDataFilter("block_size"); checkFormReady()}}>Block Size</button></ul>
+        <ul><button className="filterButton" onClick={()=>{setDataFilter("house_age"); checkFormReady()}}>House Age</button></ul>
+      </li>
+      <button onClick={handleSubmit} disabled={!areFiltersSet}>
+        Submit
+      </button>
+      <div id="mapContainer">
+        {isLoaded ? <Map data={data} dataFilter={dataFilter} /> : <p>Loading...</p>}
+      </div>
+    </div>
     );
 }
 
