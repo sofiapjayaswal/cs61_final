@@ -53,13 +53,50 @@ nav li:hover {
 #home {
   padding: 15%;
   display: flex;
-  color: #595d6d;;
+  color: #595d6d;
   align-items: center;
 }
 
 #home a {
   color: #7A89C2;
 }
+
+#visualizations {
+  padding: 2% 4% 2% 4%;
+  display: flex;
+  flex-direction: column;
+  color:#595d6d;
+}
+
+#visualizations a {
+  color: #7A89C2;
+}
+
+#graph2 {
+  display: flex;
+  align-items: center;
+}
+
+#graph2 img {
+  margin-right: 3%;
+}
+
+.graph3 {
+  display: flex;
+  align-items: center;
+}
+.graph3 #imgLeft {
+  margin-right: 3%;
+}
+.graphSection img{
+  width: 50%;
+}
+
+hr {
+  color:#595d6d;
+}
+
+
 
 
 #explore {

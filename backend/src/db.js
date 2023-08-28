@@ -3,6 +3,8 @@ import mysql from 'mysql2';
 import { Client } from 'ssh2';
 import {join, dirname} from 'path';
 import { fileURLToPath } from 'url';
+
+// Source: https://medium.com/@devontem/nodejs-express-using-ssh-to-access-mysql-remotely-60372832dd08
 // Create a new SSH client instance
 const ssh = new Client();
 
@@ -35,7 +37,7 @@ const db = new Promise((resolve, reject) => {
           stream,
         });
         // Connect to the MySQL database
-        await connection.connect((err2) => {
+        connection.connect((err2) => {
           if (err2) {
             console.log('mysql connection error', err2)
             // Reject the promise if there's a MySQL connection error
