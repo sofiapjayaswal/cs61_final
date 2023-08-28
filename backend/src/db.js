@@ -27,16 +27,15 @@ const db = new Promise((resolve, reject) => {
         }
 
         // Create a MySQL connection using the forwarded stream
-        const connection = mysql.createConnection({
+        const connection = await mysql.createConnection({
           host: '127.0.0.1',
           user: 'root',
           password: 'SAQ7bmMdUW85cP',
           database: 'cali_housing_prices',
           stream,
         });
-
         // Connect to the MySQL database
-        connection.connect((err2) => {
+        await connection.connect((err2) => {
           if (err2) {
             console.log('mysql connection error', err2)
             // Reject the promise if there's a MySQL connection error
