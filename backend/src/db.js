@@ -19,7 +19,7 @@ const db = new Promise((resolve, reject) => {
       12345,      // source port, any valid port number
       '127.0.0.1', // destination address (localhost on SSH server)
       3306,       // destination port (MySQL default port)
-      (err, stream) => {
+      async (err, stream) => {
         if (err) {
           // Reject the promise if there's an SSH error
           reject(err);
