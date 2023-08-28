@@ -81,7 +81,6 @@ function Map({ data, dataFilter }) {
         )
       } else if (dataFilter === "Ocean Proximity") {
         const ocean_prox = blockData.ocean_prox;
-        console.log(ocean_prox)
         return (
           <div className="modalContent">
             <h2>Ocean proximity for block located at ({latitude}, {longitude})</h2>

@@ -7,6 +7,7 @@ import routes from './routes.js';
 // initialize
 const app = express();
 const frontendUrl = 'https://cs61-final-frontend.onrender.com';
+// const frontendUrl = 'http://localhost:3000'
 // enable/disable cross origin resource sharing if necessary
 app.use(cors({origin: frontendUrl, credentials: true}));
 

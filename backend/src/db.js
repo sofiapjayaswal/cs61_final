@@ -38,6 +38,7 @@ const db = new Promise((resolve, reject) => {
         // Connect to the MySQL database
         connection.connect((err2) => {
           if (err2) {
+            console.log('mysql connection error', err2)
             // Reject the promise if there's a MySQL connection error
             reject(err2);
           } else {
@@ -51,6 +52,7 @@ const db = new Promise((resolve, reject) => {
 
   // Set up an event listener for the 'error' event
   ssh.on('error', (err) => {
+    console.log('ssh error', err)
     // Reject the promise if there's an SSH error
     reject(err);
   });
