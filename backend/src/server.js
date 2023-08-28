@@ -6,9 +6,9 @@ import routes from './routes.js';
 
 // initialize
 const app = express();
-const url = 'http://localhost:3000';
+const frontendUrl = 'https://cs61-final-frontend.onrender.com';
 // enable/disable cross origin resource sharing if necessary
-app.use(cors({origin: url, credentials: true}));
+app.use(cors({origin: frontendUrl, credentials: true}));
 
 // enable/disable http request logging
 app.use(morgan('dev'));

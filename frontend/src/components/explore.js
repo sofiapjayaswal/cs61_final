@@ -4,7 +4,7 @@ import axios from 'axios';
 import Dropdown from './filterDropdown';
 
 function Explore(props) {
-  const backendUrl = 'http://localhost:9090';
+  const backendUrl = 'https://cs61-final-backend.onrender.com';
   const [data, setData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
