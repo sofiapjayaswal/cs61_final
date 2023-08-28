@@ -1,8 +1,8 @@
 import React from 'react';
 
-function Home(props) {
+function Visualizations(props) {
   return (
-    <div id="home">
+    <div id="visualizations">
       <div id="textSection">   
         <h1>CS61 FINAL PROJECT</h1>
         <h2>California House Prices Database</h2>
@@ -20,4 +20,4 @@ function Home(props) {
   );
 }
 
-export default Home;
+export default Visualizations;

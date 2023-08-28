@@ -7,6 +7,7 @@ import { faHouseLaptop } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Home from './components/home';
 import Explore from './components/explore';
+import Visualizations from './components/visualizations'
 
 library.add(faHouseLaptop);
 
@@ -18,6 +19,7 @@ function App() {
         <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/visualizations" element={<Visualizations />} />
           <Route path="/query" element={<Explore />} />
         </Routes>
       </div>
@@ -34,9 +36,8 @@ function Nav(props) {
           <li><NavLink to="/"><FontAwesomeIcon id="home-icon" icon="house-laptop" /></NavLink></li>
         </div>
         <div id="non-home-nav">
-          <li><NavLink to="/analytics">Analytics</NavLink></li>
+          <li><NavLink to="/visualizations">Visualizations</NavLink></li>
           <li><NavLink to="/query">Explore/Query</NavLink></li>
-          <li><NavLink to="/about">About</NavLink></li>
         </div>
       </ul>
     </nav>

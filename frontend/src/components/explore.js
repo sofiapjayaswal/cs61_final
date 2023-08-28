@@ -1,68 +1,161 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import Map from './map';
 import axios from 'axios';
+import Dropdown from './filterDropdown';
 
 function Explore(props) {
   const backendUrl = 'http://localhost:9090';
   const [data, setData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [dataFilter, setDataFilter] = useState(null);
-  const [locationFilter, setLocationFilter] = useState(null);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [dataFilter, setDataFilter] = useState(
+    [
+      {
+        id: 0,
+        title: 'Financial Information',
+        selected: false,
+        key: 'dataFilter'
+      },
+      {
+          id: 1,
+          title: 'Ocean Proximity',
+          selected: false,
+          key: 'dataFilter'
+      },
+      {
+          id: 2,
+          title: 'Block Size',
+          selected: false,
+          key: 'dataFilter'
+      },
+      {
+        id: 3,
+        title: 'House Size',
+        selected: false,
+        key: 'dataFilter'
+      },
+      {
+        id: 4,
+        title: 'House Age',
+        selected: false,
+        key: 'dataFilter'
+      }
+    ]
+  );
+  const [locationFilter, setLocationFilter] = useState(
+    [
+      {
+          id: 0,
+          title: 'Northern California',
+          selected: false,
+          key: 'locationFilter'
+      },
+      {
+          id: 1,
+          title: 'Central California',
+          selected: false,
+          key: 'locationFilter'
+      },
+      {
+          id: 2,
+          title: 'Southern California',
+          selected: false,
+          key: 'locationFilter'
+      }
+    ]
+  );
   const [areFiltersSet, setAreFiltersSet] = useState(false);
 
-  // useEffect(() => {
-  //   axios.get(`${backendUrl}/data`, {para})
-  //     .then(response => {
-  //       setLocationData(response.data);
-  //       setIsLoaded(true); // Set isLoaded to true after locationData is set
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching data:', error);
-  //     });
-  // }, []);
-
-  const checkFormReady = () => {
-    if (dataFilter && locationFilter) {
+  const checkFormReady = useCallback(async () => {
+    if (
+      locationFilter.some(location => location.selected === true) &&
+      dataFilter.some(filter => filter.selected === true)
+    ) {
       setAreFiltersSet(true);
     } else {
       setAreFiltersSet(false);
     }
+  }, [dataFilter, locationFilter]);
+
+  useEffect(() => {
+    checkFormReady()
+  }, [dataFilter, locationFilter, checkFormReady]); // An array of dependencies (optional)
+
+  const locationResetThenSet = (id, key) => {
+    const temp = [...locationFilter]; // create temp copy to update one item to selected true
+
+    temp.forEach((item) => (item.selected = false));
+    temp[id].selected = true;
+
+    setLocationFilter(temp);
+  };
+  
+  const dataResetThenSet = (id, key) => {
+    const temp = [...dataFilter]; // create temp copy to update one item to selected true
+
+    temp.forEach((item) => (item.selected = false));
+    temp[id].selected = true;
+
+    setDataFilter(temp);
   };
 
-  const handleSubmit = () => {
+  
+
+  const handleSubmit = async ()  => {
     if (areFiltersSet) {
-      axios.get(`${backendUrl}/data`, {params: { location: locationFilter, dataType: dataFilter }})
+      setIsUpdating(true)
+      await axios.get(`${backendUrl}/data`, {params: { location: locationFilter.find(location => location.selected === true).title, dataType: dataFilter.find(filter => filter.selected === true).title }})
       .then(response => {
         setData(response.data);
-        setIsLoaded(true); // Set isLoaded to true after locationData is set
+        setIsLoaded(true)
+        setIsUpdating(false)
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
     }
-    // handle database call here
   };
+
+  const renderUpdatingMessage = () => {
+    if (isUpdating) {
+      return (
+        <div id="updatingMessage">Updating and fetching data...</div>
+      )
+    } else {
+      return null
+    }
+  }
   return (
     <div id="explore">
-      <li className="mapFilters">
-          <h2>Filter By:</h2>
-          <ul><button className="filterButton" onClick={()=>{setLocationFilter("North"); checkFormReady()}}>Northern California</button></ul>
-          <ul><button className="filterButton" onClick={()=>{setLocationFilter("Central"); checkFormReady()}}>Central California</button></ul>
-          <ul><button className="filterButton" onClick={()=>{setLocationFilter("South"); checkFormReady()}}>Southern California</button></ul>
-      </li>
-      <li className="mapFilters">
-        <h2>View Data For Blocks Related To:</h2>
-        <ul><button className="filterButton" onClick={()=>{setDataFilter("financial_info"); checkFormReady()}}>Financial Information</button></ul>
-        <ul><button className="filterButton" onClick={()=>{setDataFilter("ocean_proximity"); checkFormReady()}}>Ocean Proximity</button></ul>
-        <ul><button className="filterButton" onClick={()=>{setDataFilter("house_size"); checkFormReady()}}>House Size</button></ul>
-        <ul><button className="filterButton" onClick={()=>{setDataFilter("block_size"); checkFormReady()}}>Block Size</button></ul>
-        <ul><button className="filterButton" onClick={()=>{setDataFilter("house_age"); checkFormReady()}}>House Age</button></ul>
-      </li>
-      <button onClick={handleSubmit} disabled={!areFiltersSet}>
+      <div id="instructions"> 
+        <h2><strong>Instructions for Querying/Using the Map:</strong></h2>
+        <div>Below you will see two dropdown menus where you can select from several options.
+          The first dropdown menu is where you select what region of California you want to focus on — North, Central, or South.
+          The second dropdown is where you select what type of data you want to examine for the blocks of California.
+          Once you have both selected, press submit and a map will appear with markers. As you zoom in on the map, more markers will appear.
+          Press on a marker to view data about the specific block. This data is being retrieved from the database we created. If you want
+          to perform another query, you can select new options from the dropdown menus and press submit again. Note that if you change the region,
+          you will have to move, using your mouse, to the region on the map.
+        </div>
+      </div>
+      <div id="dropdowns">
+        <Dropdown
+          title="Select Location"
+          ddList={locationFilter}
+          resetThenSet={locationResetThenSet}
+        />
+        <Dropdown
+          title="Select Data To Examine"
+          ddList={dataFilter}
+          resetThenSet={dataResetThenSet}
+        />
+      </div>
+      <button id="submit" onClick={handleSubmit} disabled={!areFiltersSet}>
         Submit
       </button>
+      {renderUpdatingMessage()}
       <div id="mapContainer">
-        {isLoaded ? <Map data={data} dataFilter={dataFilter} /> : <p>Loading...</p>}
+        {isLoaded ? <Map data={data} dataFilter={dataFilter.find(filter => filter.selected === true).title} /> : <p>Select filters above to view map!</p>}
       </div>
     </div>
     );

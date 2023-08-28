@@ -1,9 +1,13 @@
 import fs from 'fs';
 import mysql from 'mysql2';
 import { Client } from 'ssh2';
-
+import {join, dirname} from 'path';
+import { fileURLToPath } from 'url';
 // Create a new SSH client instance
 const ssh = new Client();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Create a promise to establish the SSH tunnel and MySQL connection
 const db = new Promise((resolve, reject) => {
@@ -56,7 +60,7 @@ const db = new Promise((resolve, reject) => {
     host: '18.222.24.247',
     port: 22,
     username: 'ubuntu',
-    privateKey: fs.readFileSync('../../sofia_gc_key_final.pem'),
+    privateKey: fs.readFileSync(join(__dirname, '../sofia_gc_key_final.pem')),
   });
 });
 
