@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import { GoogleMap, LoadScript, MarkerF } from "@react-google-maps/api";
-import api_key from "../config";
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -123,7 +122,7 @@ function Map({ data, dataFilter }) {
     }
   }
   return (
-    <LoadScript googleMapsApiKey={api_key}>
+    <LoadScript googleMapsApiKey={process.env.REACT_APP_API_KEY}>
       <GoogleMap
         onLoad={handleOnLoad}
         onClick={() => setActiveMarker(null)}
