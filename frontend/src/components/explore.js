@@ -9,6 +9,7 @@ function Explore(props) {
   const [data, setData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+  // create array of different filters for data and location to keep track of what is selected
   const [dataFilter, setDataFilter] = useState(
     [
       {
@@ -67,6 +68,7 @@ function Explore(props) {
   );
   const [areFiltersSet, setAreFiltersSet] = useState(false);
 
+  // keep track of whether both filters are set whenever filters are changed
   const checkFormReady = useCallback(async () => {
     if (
       locationFilter.some(location => location.selected === true) &&
@@ -78,10 +80,12 @@ function Explore(props) {
     }
   }, [dataFilter, locationFilter]);
 
+  // check whether form is ready when forms are changed
   useEffect(() => {
     checkFormReady()
   }, [dataFilter, locationFilter, checkFormReady]); // An array of dependencies (optional)
 
+  // set location filter to which one is selected in the object
   const locationResetThenSet = (id, key) => {
     const temp = [...locationFilter]; // create temp copy to update one item to selected true
 
@@ -91,6 +95,7 @@ function Explore(props) {
     setLocationFilter(temp);
   };
   
+  // set data filter to which one is selected in the object
   const dataResetThenSet = (id, key) => {
     const temp = [...dataFilter]; // create temp copy to update one item to selected true
 
@@ -100,8 +105,7 @@ function Explore(props) {
     setDataFilter(temp);
   };
 
-  
-
+  // call backend when submit is clicked
   const handleSubmit = async ()  => {
     if (areFiltersSet) {
       setIsUpdating(true)
@@ -117,6 +121,7 @@ function Explore(props) {
     }
   };
 
+  // show updating message when data is loading
   const renderUpdatingMessage = () => {
     if (isUpdating) {
       return (

@@ -22,6 +22,7 @@ function Map({ data, dataFilter }) {
   const mapRef = useRef(null);
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
+  // modal logic
   const openModal = () => {
     setIsOpen(true);
   }
@@ -47,6 +48,7 @@ function Map({ data, dataFilter }) {
     mapRef.current = map;
   };
 
+  // load 1000 closest markers when bounds change (zoom in to see more markers)
   const handleLazyLoad = () => {
     if (mapRef.current) {
       const map = mapRef.current;
@@ -66,6 +68,7 @@ function Map({ data, dataFilter }) {
     }
   };
   
+  // render modal content depending on the data filter set
   const conditionalRenderModalContent = (block_id, latitude, longitude) => {
     const blockData = data.find(obj => obj.block_id === block_id);
     if (blockData) {
@@ -120,6 +123,7 @@ function Map({ data, dataFilter }) {
       }
     }
   }
+
   return (
     <LoadScript googleMapsApiKey={process.env.REACT_APP_API_KEY}>
       <GoogleMap
@@ -134,7 +138,7 @@ function Map({ data, dataFilter }) {
             position={{ lat: parseFloat(latitude), lng: parseFloat(longitude) }}
             onClick={() => handleActiveMarker(parseInt(block_id))}
           >
-              {activeMarker === block_id && (
+              {activeMarker === block_id && ( // when marker is clicked show modal for specific block_id
               <Modal
                   isOpen={modalIsOpen}
                   onRequestClose={closeModal}

@@ -28,7 +28,6 @@ app.set('views', path.join(__dirname, '../src/views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // To parse the incoming requests with JSON payloads
 app.use('', routes); // connect routes
-// additional init stuff should go before hitting the routing
 
 
 // START THE SERVER

@@ -3,7 +3,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faAngleUp, faAngleDown, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-library.add(faAngleDown, faAngleUp, faCheck);
+library.add(faAngleDown, faAngleUp, faCheck); // add font awesome icons to library
+
 function Dropdown({ddList, title, resetThenSet}) { // referenced code at https://blog.logrocket.com/customize-reusable-react-dropdown-menu-component/
   const [isDdOpen, setisDdOpen] = useState(false)
   const [headerTitle, setheaderTitle] = useState(title);
@@ -14,6 +15,7 @@ function Dropdown({ddList, title, resetThenSet}) { // referenced code at https:/
     setheaderTitle(title)
     resetThenSet(id, key)
   }
+  
   return (
     <div className="dd-wrapper">
       <button

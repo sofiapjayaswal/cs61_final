@@ -40,7 +40,8 @@ router.get('/data', async (req, res) => {
     final_query = `${first_part}, housing_median_age FROM block_location b_l JOIN house_age a
     ON b_l.block_id = a.block_id WHERE latitude >= ${min_lat} AND latitude <= ${max_lat};`
   }
-
+  
+  // perform query
   db.query(final_query, (err, results) => {
     if (err) {
       console.error('Error fetching data:', err);

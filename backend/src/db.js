@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 
 const ssh = new Client();
 
+// get file path to key file
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -22,16 +23,16 @@ const connectToDatabase = () => {
             reject(err);
             return;
           }
-
+          // create connection to mysql
           const connection = await mysql.createConnection({
             host: '127.0.0.1',
             user: 'root',
-            password: 'SAQ7bmMdUW85cP',
+            password: 'SAQ7bmMdUW85cP', // mysql configurations
             database: 'cali_housing_prices',
             stream,
           });
 
-          connection.connect((err2) => {
+          connection.connect((err2) => { // connect to database
             if (err2) {
               console.log('mysql connection error', err2);
               reject(err2);
@@ -43,6 +44,7 @@ const connectToDatabase = () => {
       );
     });
 
+    // connect to SSH
     ssh.on('error', (err) => {
       console.log('ssh error', err);
       // Retry the SSH connection after a delay (e.g., 5 seconds)
@@ -52,7 +54,7 @@ const connectToDatabase = () => {
     });
 
     ssh.connect({
-      host: '18.222.24.247',
+      host: '18.222.24.247', // ssh configurations
       port: 22,
       username: 'ubuntu',
       privateKey: fs.readFileSync(join(__dirname, '../sofia_gc_key_final.pem')),
@@ -60,6 +62,6 @@ const connectToDatabase = () => {
   });
 };
 
-const db = connectToDatabase();
+const db = connectToDatabase(); // call function
 
 export default db;
