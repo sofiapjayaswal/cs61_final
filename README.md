@@ -17,6 +17,7 @@ to the frontend and displayed to the user. Below is a demonstration of using the
 * In one terminal window, cd into frontend and run "npm run start"
 * In another terminal window, cd into backend and run "npm start"
 * The web app will run on http://localhost:3000
+
   Note: The map will have a watermark because you will not have your own Google Map API key, but you can create one [here](https://developers.google.com/maps).
   
 ![gif3](https://github.com/sofiapjayaswal/cs61_final/assets/113393291/421e0399-cf5d-4435-b5ac-a2772e7fcfb9) 
