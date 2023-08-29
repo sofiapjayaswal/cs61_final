@@ -11,7 +11,7 @@ for what location and data the user wants to view. Then the backend creates an S
 to the frontend and displayed to the user. Below is a demonstration of using the query page. ![gif3](https://github.com/sofiapjayaswal/cs61_final/assets/113393291/421e0399-cf5d-4435-b5ac-a2772e7fcfb9)
 
 
-![gif2](https://github.com/sofiapjayaswal/cs61_final/assets/113393291/1ebb3640-5562-4abd-be30-e98a7fe36ee1)
+
 
 
 ![gif1](https://github.com/sofiapjayaswal/cs61_final/assets/113393291/c4441d1c-39af-4d3b-b0b1-5cfbc980ea91)
