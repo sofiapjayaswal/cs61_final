@@ -23,7 +23,7 @@ function Visualizations(props) {
           <img src={require("../assets/img/graph2.png")} alt="Graph showing relationship between Ocean Proximity and House Value" />
           <p className="graphDescrip">
             We were relatively surprised by the results of the graph. Our initial thought would be that the near 
-            ocean section would be th most expensive, however the island section was. This makes sense, however, when 
+            ocean section would be the most expensive, however the island section was. This makes sense, however, when 
             you factor in islands such as Catalina Island which is notorious for its expensive real estate. The inland section 
             was the least expensive, which followed our predictions.
           </p>
