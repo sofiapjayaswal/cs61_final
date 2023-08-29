@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import connectToDatabase from './db.js';
 import dbPromise from './db.js';
 
 const router = Router();
@@ -6,7 +7,7 @@ const router = Router();
 // default index route
 router.get('/data', async (req, res) => {
   const { location, dataType } = req.query; // get params sent by axios
-  const db = await dbPromise;
+  const db = await connectToDatabase();
   let final_query;
   // set latitude range depending on location that user wants to view
   let min_lat;

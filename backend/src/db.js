@@ -10,7 +10,7 @@ const ssh = new Client();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const connectToDatabase = () => {
+const connectToDatabase = async () => {
   return new Promise((resolve, reject) => {
     ssh.on('ready', () => {
       ssh.forwardOut(
@@ -62,6 +62,4 @@ const connectToDatabase = () => {
   });
 };
 
-const db = connectToDatabase(); // call function
-
-export default db;
+export default connectToDatabase;

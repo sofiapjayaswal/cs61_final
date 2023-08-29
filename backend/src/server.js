@@ -3,6 +3,7 @@ import cors from 'cors';
 import path from 'path';
 import morgan from 'morgan';
 import routes from './routes.js';
+import connectToDatabase from './db.js';
 
 // initialize
 const app = express();
@@ -34,6 +35,7 @@ app.use('', routes); // connect routes
 // =============================================================================
 async function startServer() {
   try {
+    const dbConnection = connectToDatabase(); // connect to database
     const port = process.env.PORT || 9090;
     app.listen(port);
 
